@@ -5,7 +5,7 @@ FROM hombrelab/hombre-alpine AS builder
 # clone dsmr-reader
 RUN apk add --no-cache \
     git \
-    && git clone --branch v3.9.1 https://github.com/dennissiemensma/dsmr-reader.git /dsmr-reader \
+    && git clone --branch v4.9.0 https://github.com/dennissiemensma/dsmr-reader.git /dsmr-reader \
     && cp /dsmr-reader/dsmrreader/provisioning/django/postgresql.py /dsmr-reader/dsmrreader/settings.py
 
 FROM hombrelab/hombre-python

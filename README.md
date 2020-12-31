@@ -1,7 +1,7 @@
 # hombre-dsmr-reader
 ![Docker Pulls](https://img.shields.io/docker/pulls/hombrelab/hombre-dsmr-reader) ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/hombrelab/hombre-dsmr-reader) ![GitHub commit activity](https://img.shields.io/github/last-commit/hombrelab/hombre-dsmr-reader)  
 
-The [hombre-dsmr-reader](https://hub.docker.com/repository/docker/hombrelab/hombre-dsmr-reader) image is based on the [hombre-alpine](https://hub.docker.com/repository/docker/hombrelab/hombre-alpine) image and [DSMR-reader v3.9.1](https://github.com/dennissiemensma/dsmr-reader).  
+The [hombre-dsmr-reader](https://hub.docker.com/repository/docker/hombrelab/hombre-dsmr-reader) image is based on the [hombre-alpine](https://hub.docker.com/repository/docker/hombrelab/hombre-alpine) image and [DSMR-reader v4.9.0](https://github.com/dennissiemensma/dsmr-reader).  
 It is a customized Docker image for and by [@Hombrelab](me@hombrelab.com).
 
 Information how to use this version of the DSMR-reader is in the [DSRM-reader documentatie (dutch)](https://dsmr-reader.readthedocs.io/nl/v3/).
