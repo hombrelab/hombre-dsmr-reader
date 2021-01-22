@@ -2,14 +2,11 @@
 
 FROM hombrelab/hombre-alpine AS builder
 
-ARG APPVERSION=4.11.0
-
 # clone dsmr-reader
 RUN apk add --no-cache \
     git \
-    && git clone --branch v${APPVERSION} https://github.com/dsmrreader/dsmr-reader.git /dsmr-reader \
-#    && cp /dsmr-reader/dsmrreader/provisioning/django/postgresql.py /dsmr-reader/dsmrreader/settings.py
-    && cp /dsmr-reader/dsmrreader/provisioning/django/settings.py.template /dsmr-reader/dsmrreader/settings.py
+    && git clone --branch v3.12 https://github.com/dsmrreader/dsmr-reader.git /dsmr-reader \
+    && cp /dsmr-reader/dsmrreader/provisioning/django/postgresql.py /dsmr-reader/dsmrreader/settings.py
 
 FROM hombrelab/hombre-python
 
@@ -31,15 +28,9 @@ ENV DB_NAME dsmrreader
 
 # install postgres client en nginx
 RUN apk add --no-cache \
-    bash \
-    curl \
-    nginx \
-    openssl \
+    socat \
     postgresql-client \
-    mariadb-connector-c-dev \
-    mariadb-client \
-    tzdata \
-    jq \
+    nginx \
     supervisor \
     && mkdir /dsmr-reader /app
 
@@ -48,19 +39,13 @@ WORKDIR /dsmr-reader
 
 COPY --from=builder /dsmr-reader .
 
-RUN cp -f ./dsmrreader/provisioning/django/settings.py.template ./dsmrreader/settings.py
-
+# install all dependencies and remove install libraries
 RUN apk add --no-cache --virtual .build-dependencies \
-    gcc \
-    python3-dev \
-    musl-dev \
-    postgresql-dev \
     build-base \
-    mariadb-dev\
-    && python3 -m pip install -r ./dsmrreader/provisioning/requirements/base.txt --no-cache-dir \
-    && python3 -m pip install psycopg2 --no-cache-dir \
-    && python3 -m pip install mysqlclient --no-cache-dir \
-    && apk --purge del .build-dependencies
+    postgresql-dev \
+    && pip install -r ./dsmrreader/provisioning/requirements/base.txt \
+    && pip install -r ./dsmrreader/provisioning/requirements/postgresql.txt \
+    && apk del .build-dependencies
 
 RUN rm -f /etc/nginx/conf.d/default.conf \
     && mkdir -p /run/nginx/ \
